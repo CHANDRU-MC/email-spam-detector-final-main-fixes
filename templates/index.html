@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Spam Classifier</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #38ef7d 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            color: #fff;
+        }
+
+        /* Hidden by default for toggling between pages */
+        .hidden {
+            display: none;
+        }
+
+        /* Container for content */
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Heading Styles */
+        h1 {
+            font-family: 'Cinzel', serif;
+            color: #000;
+            text-align: center;
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Quote Styles */
+        p.quote {
+            font-size: 20px;
+            color: #555;
+            margin-bottom: 40px;
+        }
+
+        /* Button styling */
+        .get-started {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .get-started:hover {
+            background-color: #45a049;
+        }
+
+        /* Textarea Styling */
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 2px;
+            border-radius: 5px;
+            border: 2px solid black;
+            font-size: 16px;
+            resize: none;
+            background-color: #e0f7fa;
+            color: #333;
+        }
+
+        textarea:hover {
+            box-shadow: 2px 2px 10px black;
+        }
+
+        /* Button group styling */
+        .button-group {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Styling for buttons */
+        button, a {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover, a:hover {
+            background-color: #45a049;
+        }
+
+        /* Spam result styles */
+        .spam {
+            color: red;
+            font-size: 24px;
+        }
+
+        .not-spam {
+            color: green;
+            font-size: 24px;
+        }
+
+        /* Footer styles */
+        footer {
+            margin-top: 20px;
+            color: #888;
+            text-align: center;
+        }
+
+        /* Media Queries for responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                max-width: 95%;
+            }
+
+            textarea {
+                height: 150px;
+            }
+
+            h1 {
+                font-size: 32px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            textarea {
+                height: 120px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            button, a {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Landing Page -->
+    <div class="container" id="landing-page">
+        <h1>Email Spam Classifier</h1>
+        <p class="quote">"Protect your inbox and ensure your emails are safe with our efficient spam detection."</p>
+        <button class="get-started" onclick="showClassifier()">Get Started</button>
+    </div>
+
+    <!-- Email Classifier Page (Hidden by default) -->
+    <div class="container hidden" id="classifier-page">
+        <h1 style="color: red; text-shadow: 2px 2px 4px black;">Email Spam Classifier</h1>
+        <form method="post" action="/predict">
+            <textarea name="email-content" placeholder="Enter your Email" autocomplete="off">{{ email_text }}</textarea>
+            <div class="button-group">
+                <button type="submit">Check Spam</button>
+                <a href="/">Reset</a>
+            </div>
+        </form>
+
+        <!-- Spam prediction result -->
+        <div>
+            {% if predictions == 1 %}
+                <h2 class="spam">Spam</h2>
+            {% else %}
+                <h2 class="not-spam">Not Spam</h2>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>All Rights reserved @ Ashish 2024</p>
+    </footer>
+
+    <!-- JavaScript to handle page switching -->
+    <script>
+        function showClassifier() {
+            document.getElementById('landing-page').classList.add('hidden'); // Hide landing page
+            document.getElementById('classifier-page').classList.remove('hidden'); // Show classifier page
+        }
+    </script>
+</body>
+</html>
